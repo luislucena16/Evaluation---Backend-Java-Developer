@@ -8,51 +8,51 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.llucena.springboot.backend.apirestb.models.dao.IClienteDao;
-import com.llucena.springboot.backend.apirestb.models.entity.Cliente;
+import com.llucena.springboot.backend.apirestb.models.dao.ICustomerDao;
+import com.llucena.springboot.backend.apirestb.models.entity.Customer;
 import com.llucena.springboot.backend.apirestb.models.entity.Region;
 
 @Service
-public class ClienteServiceImpl implements ClienteService {
+public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
-	private IClienteDao clienteDao;
+	private ICustomerDao customerDao;
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Cliente> findAll() {
-		return (List<Cliente>) clienteDao.findAll();
+	public List<Customer> findAll() {
+		return (List<Customer>) customerDao.findAll();
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Page<Cliente> findAll(Pageable pageable) {
+	public Page<Customer> findAll(Pageable pageable) {
 		
-		return clienteDao.findAll(pageable);
+		return customerDao.findAll(pageable);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public Cliente findById(Long id) {		
-		return clienteDao.findById(id).orElse(null);
+	public Customer findById(Long id) {		
+		return customerDao.findById(id).orElse(null);
 	}
 	
 	@Override
 	@Transactional
-	public Cliente save(Cliente cliente) {		
-		return clienteDao.save(cliente);
+	public Customer save(Customer customer) {		
+		return customerDao.save(customer);
 	}
 
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		clienteDao.deleteById(id);
+		customerDao.deleteById(id);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Region> findAllRegiones() {
-		return clienteDao.findAllRegiones();
+	public List<Region> findAllRegions() {
+		return customerDao.findAllRegions();
 	}
 
 

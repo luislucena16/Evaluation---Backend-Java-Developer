@@ -22,22 +22,22 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="clientes")
-public class Cliente implements Serializable{
+@Table(name="customers")
+public class Customer implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable=false)
-	@Size(min=4, max=55, message= "El tamaño tiene que estar entre 4 y 55")
-	@NotEmpty(message="No puede estar vacio")
-	private String nombre;
+	@Size(min=4, max=55, message= "Size must be between 4 and 55")
+	@NotEmpty(message="Cannot be empty")
+	private String name;
 	
 	@NotEmpty
-	private String apellido;
-	@NotEmpty(message="No puede estar vacio")
-	@Email(message="Por favor ingrese un formato correcto EJ 'email@hotmail.com' ")
+	private String lastname;
+	@NotEmpty(message="Cannot be empty")
+	@Email(message="Please enter a correct format EJ 'email@hotmail.com' ")
 	@Column(nullable=false, unique=true)
 	private String email;
 	
@@ -47,7 +47,7 @@ public class Cliente implements Serializable{
 	private Date createAt;
 	
 	
-	private String foto;
+	private String photo;
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -68,17 +68,17 @@ public class Cliente implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getApellido() {
-		return apellido;
+	public String getLastname() {
+		return lastname;
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 	public String getEmail() {
 		return email;
@@ -95,11 +95,11 @@ public class Cliente implements Serializable{
 	
 	
 	
-	public String getFoto() {
-		return foto;
+	public String getPhoto() {
+		return photo;
 	}
-	public void setFoto(String foto) {
-		this.foto = foto;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	

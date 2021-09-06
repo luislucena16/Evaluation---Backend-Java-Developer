@@ -10,25 +10,25 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
-import com.llucena.springboot.backend.apirestb.models.entity.Usuario;
-import com.llucena.springboot.backend.apirestb.models.services.IUsuarioService;
+import com.llucena.springboot.backend.apirestb.models.entity.User;
+import com.llucena.springboot.backend.apirestb.models.services.IUserService;
 
 @Component
-public class InfoAdicionalToken implements TokenEnhancer{
+public class AdditionalInfoToken implements TokenEnhancer{
 
 	
 	@Autowired
-	private IUsuarioService usuarioService;
+	private IUserService userService;
 	
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 		
-		Usuario usuario = usuarioService.findByUsername(authentication.getName());
+		User user = userService.findByUsername(authentication.getName());
 		
 		Map<String,Object> info = new HashMap<>();
-		info.put("nombre", usuario.getNombre());
-		info.put("apellido", usuario.getApellido() );
-		info.put("email", usuario.getEmail());
+		info.put("name", user.getName());
+		info.put("lastname", user.getLastname() );
+		info.put("email", user.getEmail());
 		
 		
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);

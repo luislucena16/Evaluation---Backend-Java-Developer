@@ -19,8 +19,8 @@ import javax.persistence.UniqueConstraint;
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario implements Serializable {
+@Table(name = "users")
+public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,17 +34,17 @@ public class Usuario implements Serializable {
 
 	private Boolean enabled;
 	
-	private String nombre;
+	private String name;
 	
-	private String apellido;
+	private String lastname;
 	
 	@Column(unique=true)
 	private String email;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name="usuarios_roles", joinColumns=@JoinColumn(name="usuario_id")
+	@JoinTable(name="user_roles", joinColumns=@JoinColumn(name="user_id")
 	,inverseJoinColumns=@JoinColumn(name="role_id"),
-	uniqueConstraints= {@UniqueConstraint(columnNames= {"usuario_id","role_id"})})
+	uniqueConstraints= {@UniqueConstraint(columnNames= {"user_id","role_id"})})
 	private List<Role> roles;
 
 	public Long getId() {
@@ -89,20 +89,20 @@ public class Usuario implements Serializable {
 	
 	
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getEmail() {

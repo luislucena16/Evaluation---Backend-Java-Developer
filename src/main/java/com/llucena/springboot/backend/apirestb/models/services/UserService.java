@@ -15,39 +15,39 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.llucena.springboot.backend.apirestb.models.dao.IUsuarioDao;
-import com.llucena.springboot.backend.apirestb.models.entity.Usuario;
+
+import com.llucena.springboot.backend.apirestb.models.dao.IUserDao;
 
 @Service
-public class UsuarioService implements IUsuarioService,UserDetailsService {
+public class UserService implements IUserService,UserDetailsService {
 	
-	private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+	private Logger logger = LoggerFactory.getLogger(UserService.class);
 	
 	@Autowired
-	private IUsuarioDao usuarioDao;
+	private IUserDao userDao;
 	
 	@Override
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioDao.findByUsername(username);
+		com.llucena.springboot.backend.apirestb.models.entity.User user = userDao.findByUsername(username);
 		
-		if(usuario == null) {
-			logger.error("Error en el login: no existe el usuario '" + username + "' en el sistema!");
-			throw new UsernameNotFoundException("Error en el login: no existe el usuario '" + username + "' en el sistema!");			
+		if(user == null) {
+			logger.error("Login error: user does not exist '" + username + "' in the system!");
+			throw new UsernameNotFoundException("Login error: user does not exist '" + username + "' in the system!");			
 		}
 		
-		List<GrantedAuthority> authorities = usuario.getRoles()
+		List<GrantedAuthority> authorities = user.getRoles()
 				.stream()
 				.map(role -> new SimpleGrantedAuthority(role.getNombre()))
 				.peek(authority -> logger.info("Role: " + authority.getAuthority()))
 				.collect(Collectors.toList());
 		
-		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true,true, true, authorities);
+		return new User(user.getUsername(), user.getPassword(), user.getEnabled(), true,true, true, authorities);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public Usuario findByUsername(String username) {
-		return usuarioDao.findByUsername(username);
+	public com.llucena.springboot.backend.apirestb.models.entity.User findByUsername(String username) {
+		return userDao.findByUsername(username);
 	}
 }

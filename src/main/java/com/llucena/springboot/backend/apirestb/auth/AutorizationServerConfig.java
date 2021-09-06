@@ -29,7 +29,7 @@ public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapt
 	private AuthenticationManager authenticationManager;
 	
 	@Autowired
-	private InfoAdicionalToken infoAdicionalToken;
+	private AdditionalInfoToken additionalInfoToken;
 
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -41,9 +41,9 @@ public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapt
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		
-		clients.inMemory().withClient("angularapp") //Cliente que va acceder
-		.secret(passwordEncoder.encode("12345")) // password para el acceso de la app
-		.scopes("read","write") // permisos para leer y escribir
+		clients.inMemory().withClient("angularapp") //customer access
+		.secret(passwordEncoder.encode("12345")) // password for app access
+		.scopes("read","write") // password for app access
 		.authorizedGrantTypes("password","refresh_token")
 		.accessTokenValiditySeconds(3600)
 		.refreshTokenValiditySeconds(3600);
@@ -53,7 +53,7 @@ public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapt
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		
 		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken , accesTokenConverter()));
+		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(additionalInfoToken , accesTokenConverter()));
 		endpoints.authenticationManager(authenticationManager)
 		.tokenStore(tokenStorage())
 		.accessTokenConverter(accesTokenConverter())
@@ -69,7 +69,7 @@ public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapt
 	public JwtAccessTokenConverter accesTokenConverter() {
 		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
 		//jwtAccessTokenConverter.setSigningKey(JwtConfig.RSA_PRIVATE);
-		//jwtAccessTokenConverter.setVerifierKey(JwtConfig.RSA_PUBLICA);
+		//jwtAccessTokenConverter.setVerifierKey(JwtConfig.RSA_PUBLIC);
 		return jwtAccessTokenConverter;
 	}
 	
